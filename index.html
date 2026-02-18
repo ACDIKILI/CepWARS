@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>CepWARS - ACDgames</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <style>
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #1a1a1a; display: flex; align-items: center; justify-content: center; font-family: 'Arial Black', sans-serif; }
+        #phone-frame { width: 360px; height: 720px; background-color: #8BC34A; border: 12px solid #333; border-radius: 40px; position: relative; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 0 30px rgba(0,0,0,0.7); }
+        .screen { display: none; width: 100%; height: 100%; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+        .active { display: flex; }
+        h2 { font-size: 2.5em; margin: 5px 0; color: #000; }
+        .btn-yellow { background-color: #FFFF00; border: 3px solid #000; padding: 10px; margin: 4px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 75%; text-align: center; }
+        .btn-blue { background-color: #4FC3F7; border: 3px solid #000; padding: 10px; margin: 10px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 65%; text-align: center; }
+        .btn-black { background-color: #000; color: #FFF; padding: 8px 30px; border-radius: 8px; cursor: pointer; font-size: 1em; margin-top: 15px; }
+        
+        /* ÇIKIŞ BUTONU ÖZEL STİLİ */
+        .btn-exit { background-color: #d32f2f; color: white; border: 3px solid #000; padding: 6px; margin-top: 20px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 37.5%; text-align: center; font-size: 0.9em; }
+        
+        input { background-color: #FFFF00; border: 3px solid #000; padding: 12px; margin: 8px; border-radius: 12px; text-align: center; font-weight: bold; width: 70%; font-size: 1.1em; text-transform: uppercase; }
+        .info-text { font-size: 11px; font-weight: bold; margin-bottom: 5px; color: #000; }
+        #welcome-msg { font-size: 1.25em; font-weight: 900; margin: 10px 0; color: #000; text-align: center; }
+        .btn-menu { position: absolute; top: 20px; right: 20px; background: #FFF; color: #000; padding: 5px 10px; border-radius: 5px; font-size: 0.8em; font-weight: bold; cursor: pointer; z-index: 100; }
+        
+        #screen-players, #screen-mine, #screen-weapon { background-color: #000; color: #00FF00; justify-content: flex-start; padding-top: 60px; }
+        .list-container { width: 90%; overflow-y: auto; flex-grow: 1; margin-bottom: 20px; padding: 10px; }
+        .player-item { font-family: 'Courier New', Courier, monospace; font-size: 1.1em; border-bottom: 1px solid #004400; padding: 12px 0; display: flex; justify-content: space-between; width: 100%; }
+        
+        .mine-card, .weapon-card { width: 85%; padding: 15px; margin: 10px auto; border-radius: 15px; text-align: center; border: 2px solid #00FF00; }
+        #iron-card { background: #2c2c2c; border-color: #888; }
+        .iron-display { font-size: 1.8em; color: #C0C0C0; font-weight: bold; margin: 5px 0; text-shadow: 2px 2px 0px #000; }
+
+        .weapon-card { background: #1a1a1a; border-color: #d32f2f; text-align: left; padding: 10px; }
+        .weapon-title { color: #f44336; font-size: 1.1em; border-bottom: 1px solid #333; margin-bottom: 5px; display: flex; justify-content: space-between; }
+        .weapon-stats { font-size: 0.7em; color: #bbb; display: flex; justify-content: space-between; margin: 5px 0; }
+        .btn-produce { background: #00FF00; color: #000; border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        .btn-produce:disabled { background: #333; color: #666; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+
+    <div id="phone-frame">
+        <div id="screen-login" class="screen active">
+            <h2>CepWARS</h2>
+            <div class="info-text">AC.Dikili & Gemini © 2026-2050</div>
+            <input type="text" id="login-name" placeholder="--- İSİM ---" maxlength="5" oninput="validateInput(this)">
+            <input type="password" id="login-pass" placeholder="--- PAROLA ---" maxlength="5" oninput="validateInput(this)">
+            <div class="btn-black" onclick="loginCheck()">DEVAM</div>
+            <div class="btn-blue" onclick="showScreen('screen-register')">Yeni KAYIT</div>
+        </div>
+
+        <div id="screen-register" class="screen">
+            <h2>CepWARS</h2>
+            <div class="btn-blue">Yeni KAYIT</div>
+            <input type="text" id="reg-name" placeholder="--- İSİM ---" maxlength="5" oninput="validateInput(this)">
+            <input type="password" id="reg-pass" placeholder="--- PAROLA ---" maxlength="5" oninput="validateInput(this)">
+            <div class="btn-black" onclick="registerUser()">KAYDET</div>
+        </div>
+
+        <div id="screen-main" class="screen">
+            <h2>CepWARS</h2>
+            <div class="info-text">AC.Dikili & Gemini © 2026-2050</div>
+            <div id="welcome-msg">HOŞGELDİN (X, Y)</div>
+            <div class="btn-yellow" onclick="listPlayers()">OYUNCU</div>
+            <div class="btn-yellow" onclick="showScreen('screen-mine')">MADEN</div>
+            <div class="btn-yellow" onclick="showScreen('screen-weapon')">SİLAH</div>
+            <div class="btn-yellow">ARAŞTIRMA</div>
+            <div class="btn-yellow">BİRLİKLER</div>
+            <div class="btn-yellow">SAVAŞ</div>
+            <div class="btn-yellow">CASUS UYDU</div>
+            <div class="btn-exit" onclick="logout()">ÇIKIŞ</div>
+        </div>
+
+        <div id="screen-weapon" class="screen">
+            <div class="btn-menu" onclick="showScreen('screen-main')">MENÜ</div>
+            <h3 style="color: #f44336; margin-top:5px;">SİLAH FABRİKASI</h3>
+            <div class="iron-display">DEMİR: <span id="ui-iron-weapon">0</span></div>
+            <div class="list-container" id="weapon-list"></div>
+        </div>
+
+        <div id="screen-players" class="screen">
+            <div class="btn-menu" onclick="showScreen('screen-main')">MENÜ</div>
+            <h3 style="color: #00FF00; margin-top:5px;">AKTİF OYUNCULAR</h3>
+            <div id="player-list" class="list-container"></div>
+        </div>
+        
+        <div id="screen-mine" class="screen">
+            <div class="btn-menu" onclick="showScreen('screen-main')">MENÜ</div>
+            <h3 style="color: #00FF00;">ÜRETİM MERKEZİ</h3>
+            <div class="mine-card" id="gold-card"><div class="mine-title" style="color:#FFFF00">ALTIN MADENİ</div><div style="color:#FFF">Mevcut: <span id="val-gold">0</span></div><div class="mine-timer" id="timer-gold">60:00</div><button class="btn-produce" id="btn-gold" onclick="startProduction('gold')">ÜRET</button></div>
+            <div class="mine-card" id="iron-card"><div class="mine-title" style="color:#C0C0C0">DEMİR MADENİ</div><div style="color:#FFF">Mevcut: <span id="val-iron">0</span></div><div class="mine-timer" id="timer-iron">60:00</div><button class="btn-produce" id="btn-iron" onclick="startProduction('iron')">ÜRET</button></div>
+        </div>
+    </div>
+
+    <script>
+        const WEAPON_DB = {
+            "T1": { name: "Tank T-1", speed: 3, power: 5, armor: 100, price: 250, time: 20 },
+            "T2": { name: "Tank T-2", speed: 5, power: 3, armor: 50, price: 100, time: 10 },
+            "T3": { name: "Tank T-3", speed: 10, power: 1, armor: 20, price: 25, time: 5 },
+            "H1": { name: "Heli Atak-1", speed: 30, power: 3, armor: 20, price: 100, time: 10 },
+            "H2": { name: "Heli Atak-2", speed: 30, power: 5, armor: 50, price: 250, time: 20 },
+            "KORKUT": { name: "Korkut", speed: 10, power: 5, armor: 50, price: 500, time: 30 },
+            "KORAL": { name: "Koral", speed: 3, power: 50, armor: 500, price: 2500, time: 300 },
+            "TOP": { name: "TOP", speed: 0, power: 5, armor: 50, price: 1000, time: 100 },
+            "TS": { name: "Tanksavar", speed: 0, power: 10, armor: 50, price: 1500, time: 200 },
+            "US": { name: "Uçaksavar", speed: 0, power: 25, armor: 50, price: 2500, time: 300 }
+        };
+
+        var firebaseConfig = { apiKey: "AIzaSyBbtvGBl8m1x8thDlsUUutvujedIBCC4PA", authDomain: "blackjack-4x4.firebaseapp.com", databaseURL: "https://blackjack-4x4-default-rtdb.europe-west1.firebasedatabase.app", projectId: "blackjack-4x4", storageBucket: "blackjack-4x4.appspot.com", messagingSenderId: "805180924640", appId: "1:805180924640:web:c7da5f8c037b7ff5c26685" };
+        firebase.initializeApp(firebaseConfig);
+        var db = firebase.database();
+        var currentUser = null;
+        var mineInterval = null;
+        var weaponInterval = null;
+
+        function validateInput(input) { input.value = input.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); }
+        function showScreen(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); if(id === 'screen-mine') updateMineUI(); if(id === 'screen-weapon') updateWeaponUI(); }
+
+        function loginCheck() {
+            var name = document.getElementById('login-name').value;
+            var pass = document.getElementById('login-pass').value;
+            db.ref('CepWARS/users/' + name).once('value').then((snap) => {
+                if (snap.exists() && snap.val().password === pass) {
+                    currentUser = name;
+                    var d = snap.val();
+                    document.getElementById('welcome-msg').innerText = "HOŞGELDİN " + name + " (" + (d.posX||0) + ", " + (d.posY||0) + ")";
+                    showScreen('screen-main');
+                } else { alert("Hata!"); }
+            });
+        }
+
+        function logout() {
+            currentUser = null;
+            clearInterval(mineInterval);
+            clearInterval(weaponInterval);
+            document.getElementById('login-name').value = "";
+            document.getElementById('login-pass').value = "";
+            showScreen('screen-login');
+        }
+
+        function registerUser() {
+            var name = document.getElementById('reg-name').value;
+            var pass = document.getElementById('reg-pass').value;
+            db.ref('CepWARS/users/' + name).set({ username: name, password: pass, posX: Math.floor(Math.random()*301), posY: Math.floor(Math.random()*501), level: 1, gold: 1000, iron: 500, production: { type: 'none', endAt: 0, lastCheck: 0 }, weaponProd: { type: 'none', endAt: 0 }, weapons: { T1: 0, T2: 0, T3: 0, H1: 0, H2: 0, KORKUT: 0, KORAL: 0, TOP: 0, TS: 0, US: 0 } }).then(() => { loginCheck(); });
+        }
+
+        function listPlayers() {
+            showScreen('screen-players');
+            db.ref('CepWARS/users').once('value').then((snapshot) => {
+                const listArea = document.getElementById('player-list');
+                listArea.innerHTML = "";
+                let players = [];
+                snapshot.forEach(child => { players.push(child.val()); });
+                players.sort((a,b) => a.username.localeCompare(b.username));
+                players.forEach(p => {
+                    listArea.innerHTML += `<div class="player-item"><span>${p.username}</span><span>(${p.posX},${p.posY})</span></div>`;
+                });
+            });
+        }
+
+        function updateWeaponUI() {
+            db.ref('CepWARS/users/' + currentUser).once('value').then(snap => {
+                const user = snap.val();
+                document.getElementById('ui-iron-weapon').innerText = user.iron;
+                const container = document.getElementById('weapon-list');
+                container.innerHTML = "";
+                Object.keys(WEAPON_DB).forEach(key => {
+                    const w = WEAPON_DB[key];
+                    const count = (user.weapons && user.weapons[key]) ? user.weapons[key] : 0;
+                    const ongoing = user.weaponProd || { type: 'none' };
+                    const isBuilding = ongoing.type === key;
+                    const canAfford = user.iron >= w.price;
+                    let btnAttr = (ongoing.type !== 'none' || !canAfford) ? 'disabled' : `onclick="startWeaponProd('${key}')"`;
+                    let timerText = isBuilding ? "Üretiliyor..." : w.time + " dk";
+                    container.innerHTML += `<div class="weapon-card">
+                        <div class="weapon-title"><span>${w.name}</span><span>${count} Adet</span></div>
+                        <div class="weapon-stats"><span>Hız: ${w.speed}</span><span>Güç: ${w.power}</span><span>Zırh: ${w.armor}</span></div>
+                        <div style="display:flex; justify-content:space-between; align-items:center">
+                            <span style="color:#C0C0C0; font-size:0.8em">${w.price} Dem / <span id="timer-w-${key}">${timerText}</span></span>
+                            <button class="btn-produce" ${btnAttr}>${isBuilding ? 'SÜRE' : 'ÜRET'}</button>
+                        </div>
+                    </div>`;
+                });
+                if(user.weaponProd && user.weaponProd.type !== 'none') startWeaponTimer(user.weaponProd);
+            });
+        }
+
+        function startWeaponProd(key) {
+            const w = WEAPON_DB[key];
+            db.ref('CepWARS/users/' + currentUser + '/iron').transaction(c => c - w.price);
+            const endAt = Date.now() + (w.time * 60 * 1000);
+            db.ref('CepWARS/users/' + currentUser + '/weaponProd').set({ type: key, endAt: endAt }).then(() => updateWeaponUI());
+        }
+
+        function startWeaponTimer(prod) {
+            clearInterval(weaponInterval);
+            weaponInterval = setInterval(() => {
+                const rem = Math.floor((prod.endAt - Date.now()) / 1000);
+                const div = document.getElementById('timer-w-' + prod.type);
+                if(rem <= 0) {
+                    clearInterval(weaponInterval);
+                    db.ref('CepWARS/users/' + currentUser + '/weapons/' + prod.type).transaction(c => (c||0)+1);
+                    db.ref('CepWARS/users/' + currentUser + '/weaponProd').set({ type: 'none', endAt: 0 }).then(() => updateWeaponUI());
+                } else {
+                    if(div) div.innerText = Math.floor(rem/60) + ":" + (rem%60<10?'0':'') + (rem%60);
+                }
+            }, 1000);
+        }
+
+        function updateMineUI() { db.ref('CepWARS/users/' + currentUser).once('value').then((snap) => { const d = snap.val(); document.getElementById('val-gold').innerText = d.gold; document.getElementById('val-iron').innerText = d.iron; if (d.production && d.production.type !== 'none') checkOfflineProgress(d); }); }
+        function checkOfflineProgress(d) { const now = Date.now(); const p = d.production; const step = (p.type === 'iron') ? 6 : 60; let end = Math.min(now, p.endAt); let earn = Math.floor((end - p.lastCheck) / (step * 1000)); if (earn > 0) { db.ref('CepWARS/users/' + currentUser + '/' + p.type).transaction(c => (c||0) + earn); db.ref('CepWARS/users/' + currentUser + '/production/lastCheck').set(p.lastCheck + (earn * step * 1000)); } if (now >= p.endAt) { db.ref('CepWARS/users/' + currentUser + '/production').set({ type: 'none', endAt: 0, lastCheck: 0 }); resetMineButtons(); } else { startLocalTimer(p.type, Math.floor((p.endAt - now) / 1000)); } }
+        function startProduction(t) { const now = Date.now(); db.ref('CepWARS/users/' + currentUser + '/production').set({ type: t, endAt: now + (3600*1000), lastCheck: now }).then(() => startLocalTimer(t, 3600)); }
+        function startLocalTimer(t, s) { clearInterval(mineInterval); const other = (t === 'gold') ? 'iron' : 'gold'; const step = (t === 'iron') ? 6 : 60; document.getElementById('btn-' + t).disabled = true; document.getElementById('btn-' + other).disabled = true; document.getElementById('btn-' + other).innerText = "MEŞGUL"; mineInterval = setInterval(() => { s--; document.getElementById('timer-' + t).innerText = Math.floor(s/60) + ":" + (s%60<10?'0':'') + (s%60); if (s > 0 && (3600-s) % step === 0) { db.ref('CepWARS/users/' + currentUser + '/' + t).transaction(c => (c||0) + 1); db.ref('CepWARS/users/' + currentUser + '/production/lastCheck').set(Date.now()); updateRes(); } if (s <= 0) { clearInterval(mineInterval); db.ref('CepWARS/users/' + currentUser + '/production').set({ type: 'none', endAt: 0, lastCheck: 0 }); resetMineButtons(); updateRes(); } }, 1000); }
+        function resetMineButtons() { document.getElementById('btn-gold').disabled = false; document.getElementById('btn-iron').disabled = false; document.getElementById('btn-gold').innerText = "ÜRET"; document.getElementById('btn-iron').innerText = "ÜRET"; document.getElementById('timer-gold').innerText = "60:00"; document.getElementById('timer-iron').innerText = "60:00"; }
+        function updateRes() { db.ref('CepWARS/users/' + currentUser).once('value').then(s => { if(s.exists()){ document.getElementById('val-gold').innerText = s.val().gold; document.getElementById('val-iron').innerText = s.val().iron; }}); }
+    </script>
+</body>
+</html>
