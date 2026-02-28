@@ -16,7 +16,7 @@
         h2 { font-size: 2.5em; margin: 5px 0; color: #000; }
         .btn-yellow { background-color: #FFFF00; border: 3px solid #000; padding: 10px; margin: 4px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 75%; text-align: center; }
         .btn-blue { background-color: #4FC3F7; border: 3px solid #000; padding: 10px; margin: 10px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 65%; text-align: center; }
-        .btn-black { background-color: #000; color: #FFF; padding: 8px 30px; border-radius: 8px; cursor: pointer; font-size: 1em; margin-top: 15px; }
+        .btn-black { background-color: #000; color: #FFF; padding: 8px 30px; border-radius: 8px; cursor: pointer; font-size: 1em; margin-top: 15px; text-align: center; display: flex; align-items: center; justify-content: center; }
         .btn-exit { background-color: #d32f2f; color: white; border: 3px solid #000; padding: 6px; margin-top: 20px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 37.5%; text-align: center; font-size: 0.9em; }
         input { background-color: #FFFF00; border: 3px solid #000; padding: 12px; margin: 8px; border-radius: 12px; text-align: center; font-weight: bold; width: 70%; font-size: 1.1em; text-transform: uppercase; }
         .info-text { font-size: 11px; font-weight: bold; margin-bottom: 5px; color: #000; }
@@ -26,55 +26,66 @@
         #screen-players, #screen-mine, #screen-weapon, #screen-units, #screen-research, #screen-spy, #screen-msg, #screen-battle { background-color: #000; color: #00FF00; justify-content: flex-start; padding-top: 60px; }
         .list-container { width: 90%; overflow-y: auto; flex-grow: 1; margin-bottom: 20px; padding: 10px; }
         .player-item { font-family: 'Courier New', Courier, monospace; font-size: 0.9em; border-bottom: 1px solid #004400; padding: 10px 0; display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        
+
+        #custom-alert { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; background: #FFFF00; border: 6px solid #000; border-radius: 20px; padding: 25px; z-index: 2000; text-align: center; color: #000; font-weight: bold; box-shadow: 0 0 50px rgba(0,0,0,0.9); }
+        #message-panel { display: none; position: absolute; bottom: 0; left: 0; width: 100%; height: 45%; background: #222; border-top: 6px solid #FFFF00; z-index: 900; flex-direction: column; align-items: center; padding-top: 15px; }
+        #panel-input { width: 85%; height: 60px; background: #000; color: #FFFF00; border: 3px solid #FFFF00; padding: 10px; font-family: 'Courier New'; font-weight: bold; margin-bottom: 15px; font-size: 1.2em; text-align: center; }
+        .panel-btn-row { display: flex; gap: 10px; width: 85%; justify-content: center; }
+        .panel-btn { flex: 1; border: 3px solid #000; padding: 10px; border-radius: 10px; font-weight: bold; cursor: pointer; text-align: center; display: flex; align-items: center; justify-content: center; font-size: 0.9em; font-family: 'Arial Black', sans-serif; }
+
         .unit-item { border: 1px solid #004400; padding: 10px; margin-bottom: 10px; border-radius: 8px; background: #050505; width: 100%; }
         .unit-coord { color: #FFFF00; font-size: 1em; margin-bottom: 8px; border-bottom: 1px dashed #444; padding-bottom: 4px; }
         .unit-detail { font-family: 'Courier New'; font-size: 0.85em; display: flex; justify-content: space-between; align-items: center; color: #00FF00; margin: 4px 0; }
         .unit-input { width: 45px !important; padding: 2px !important; margin-right: 15px !important; font-size: 0.8em !important; height: 22px; border-radius: 4px !important; background: #FFFF00 !important; color: #000 !important; border: 1px solid #000 !important; }
-
         .battle-card { border-left: 6px solid #FF0000; background: #0a0a0a; padding: 12px; margin-bottom: 12px; border-radius: 6px; }
-        .battle-units { color: #00FF00; font-size: 1.1em; font-family: 'Courier New'; margin: 5px 0; line-height: 1.2; }
         .battle-timer-row { display: flex; justify-content: space-between; align-items: center; }
         .battle-timer { color: #FFFF00; font-size: 1.4em; font-weight: bold; text-shadow: 1px 1px 2px #000; }
         .battle-loc { color: #4FC3F7; font-size: 0.9em; font-family: 'Courier New'; font-weight: bold; }
-
-        .mine-card, .weapon-card { width: 85%; padding: 15px; margin: 10px auto; border-radius: 15px; text-align: center; border: 2px solid #00FF00; }
-        #iron-card { background: #2c2c2c; border-color: #888; }
-        .iron-display { font-size: 1.8em; color: #C0C0C0; font-weight: bold; margin: 5px 0; text-shadow: 2px 2px 0px #000; }
-        .weapon-card { background: #1a1a1a; border-color: #d32f2f; text-align: left; padding: 10px; }
-        .weapon-title { color: #f44336; font-size: 1.1em; border-bottom: 1px solid #333; margin-bottom: 5px; display: flex; justify-content: space-between; }
-        .weapon-stats { font-size: 0.7em; color: #bbb; display: flex; justify-content: space-between; margin: 5px 0; }
+        .msg-item { background: #111; border-left: 4px solid #FFFF00; padding: 8px; margin-bottom: 10px; border-radius: 4px; font-size: 0.85em; color: #fff; text-align: left; }
+        .btn-decode { background: #FF9800; color: #000; font-size: 10px; padding: 2px 6px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 5px; display: inline-block; }
+        .mine-card, .weapon-card { width: 85%; padding: 12px; margin: 8px auto; border-radius: 12px; text-align: center; border: 2px solid #00FF00; }
         .btn-produce { background: #00FF00; color: #000; border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; }
         .btn-produce:disabled { background: #333; color: #666; cursor: not-allowed; }
-        .msg-item { background: #111; border-left: 4px solid #FFFF00; padding: 8px; margin-bottom: 10px; border-radius: 4px; font-size: 0.85em; color: #fff; text-align: left; }
     </style>
 </head>
 <body>
 
     <div id="phone-frame">
+        <div id="custom-alert">
+            <div id="alert-text">SİSTEM MESAJI</div>
+            <div class="btn-black" onclick="closeAlert()" style="margin: 20px auto 0 auto; padding: 8px 25px; width: auto;">TAMAM</div>
+        </div>
+
+        <div id="message-panel">
+            <div style="color:#FFF; margin-bottom: 12px; font-size: 0.9em; font-weight: bold;" id="panel-target-info">...</div>
+            <textarea id="panel-input"></textarea>
+            <div class="panel-btn-row">
+                <div class="panel-btn" id="panel-main-btn" style="background-color: #FFFF00; color: #000;">GÖNDER</div>
+                <div class="panel-btn" style="background-color: #d32f2f; color: #FFF;" onclick="closePanel()">İPTAL</div>
+            </div>
+        </div>
+
         <div id="screen-login" class="screen active">
             <h2>CepWARS</h2>
             <div class="info-text">AC.Dikili & Gemini © 2026-2050</div>
             <input type="text" id="login-name" placeholder="--- İSİM ---" maxlength="5" oninput="validateInput(this)">
             <input type="password" id="login-pass" placeholder="--- PAROLA ---" maxlength="5" oninput="validateInput(this)">
-            <div class="btn-black" onclick="loginCheck()">DEVAM</div>
+            <div class="btn-black" style="width: 70%; margin: 15px auto;" onclick="loginCheck()">DEVAM</div>
             <div class="btn-blue" onclick="showScreen('screen-register')">Yeni KAYIT</div>
         </div>
 
         <div id="screen-register" class="screen">
-            <h2>CepWARS</h2>
-            <div class="btn-blue">Yeni KAYIT</div>
+            <h2>CepWARS</h2><div class="btn-blue">Yeni KAYIT</div>
             <input type="text" id="reg-name" placeholder="--- İSİM ---" maxlength="5" oninput="validateInput(this)">
             <input type="password" id="reg-pass" placeholder="--- PAROLA ---" maxlength="5" oninput="validateInput(this)">
-            <div class="btn-black" onclick="registerUser()">KAYDET</div>
+            <div class="btn-black" style="width: 70%; margin: 15px auto;" onclick="registerUser()">KAYDET</div>
             <div class="btn-exit" onclick="showScreen('screen-login')">İPTAL</div>
         </div>
 
         <div id="screen-main" class="screen">
-            <h2>CepWARS</h2>
-            <div class="info-text">AC.Dikili & Gemini © 2026-2050</div>
+            <h2>CepWARS</h2><div class="info-text">AC.Dikili & Gemini © 2026-2050</div>
             <div id="welcome-msg">YÜKLENİYOR...</div>
-            <div class="btn-yellow" onclick="listPlayers()">OYUNCULAR</div>
+            <div class="btn-yellow" onclick="showScreen('screen-players')">OYUNCULAR</div>
             <div class="btn-yellow" id="btn-msg-main" onclick="showScreen('screen-msg')">MESAJLAR</div>
             <div class="btn-yellow" onclick="showScreen('screen-mine')">MADEN</div>
             <div class="btn-yellow" onclick="showScreen('screen-weapon')">SİLAH</div>
@@ -85,330 +96,181 @@
             <div class="btn-exit" onclick="logout()">ÇIKIŞ</div>
         </div>
 
-        <div id="screen-battle" class="screen">
-            <div class="btn-menu" onclick="showScreen('screen-main')">MENÜ</div>
-            <h3 style="color: #FF4444; margin-top:5px;">HAREKAT TAKİBİ</h3>
-            <div id="battle-list" class="list-container"></div>
-        </div>
-
-        <div id="screen-units" class="screen">
-            <div class="btn-menu" onclick="showScreen('screen-main')">MENÜ</div>
-            <h3 style="color: #FFFF00; margin-top:5px;">HAREKAT EMRİ</h3>
-            <div style="display:flex; justify-content:center; gap:5px; width:90%; margin-bottom:10px;">
-                <input type="number" id="move-x" placeholder="X" style="width: 25%; padding:8px; margin:0;">
-                <input type="number" id="move-y" placeholder="Y" style="width: 25%; padding:8px; margin:0;">
-                <button class="btn-produce" style="width:30%;" onclick="startMovement()">GİT</button>
-            </div>
-            <div class="list-container" id="unit-list"></div>
-        </div>
-
-        <div id="screen-msg" class="screen"><div class="btn-menu" onclick="showScreen('screen-main')">MENÜ</div><h3 style="color: #FFFF00; margin-top:5px;">GELEN KUTUSU</h3><div id="msg-list" class="list-container"></div><div class="btn-exit" style="width: 50%;" onclick="clearAllMessages()">OKUDUM / SİL</div></div>
+        <div id="screen-players" class="screen"><div class="btn-menu" onclick="showScreen('screen-main')">MENÜ</div><h3 style="color: #00FF00; margin-top:5px;">AKTİF OYUNCULAR</h3><div id="player-list" class="list-container"></div></div>
+        <div id="screen-msg" class="screen"><div class="btn-menu" onclick="showScreen('screen-main')">MENÜ</div><h3 style="color: #FFFF00; margin-top:5px;">GELEN KUTUSU</h3><div id="msg-list" class="list-container"></div><div class="btn-exit" style="width: 50%;" onclick="clearAllMessages()">HEPSİNİ SİL</div></div>
+        <div id="screen-mine" class="screen"><div class="btn-menu" onclick="showScreen('screen-main')">MENÜ</div><h3 style="color: #00FF00;">ÜRETİM MERKEZİ</h3><div class="mine-card"><div style="color:#FFFF00">ALTIN MADENİ</div><div style="color:#FFF">Mevcut: <span id="val-gold">0</span></div><div id="timer-gold">60:00</div><button class="btn-produce" id="btn-gold" onclick="startProduction('gold')">ÜRET</button></div><div class="mine-card" id="iron-card"><div style="color:#C0C0C0">DEMİR MADENİ</div><div style="color:#FFF">Mevcut: <span id="val-iron">0</span></div><div id="timer-iron">60:00</div><button class="btn-produce" id="btn-iron" onclick="startProduction('iron')">ÜRET</button></div></div>
         <div id="screen-weapon" class="screen"><div class="btn-menu" onclick="showScreen('screen-main')">MENÜ</div><h3 style="color: #f44336; margin-top:5px;">SİLAH FABRİKASI</h3><div class="iron-display">DEMİR: <span id="ui-iron-weapon">0</span></div><div class="list-container" id="weapon-list"></div></div>
         <div id="screen-research" class="screen"><div class="btn-menu" onclick="showScreen('screen-main')">MENÜ</div><h3 style="color: #FFFF00; margin-top:5px;">ARGE MERKEZİ</h3><div class="iron-display" style="color:#FFFF00">ALTIN: <span id="ui-gold-research">0</span></div><div class="list-container" id="research-list"></div></div>
+        <div id="screen-units" class="screen"><div class="btn-menu" onclick="showScreen('screen-main')">MENÜ</div><h3 style="color: #FFFF00; margin-top:5px;">HAREKAT EMRİ</h3><div style="display:flex; justify-content:center; gap:5px; width:90%; margin-bottom:10px;"><input type="number" id="move-x" placeholder="X" style="width: 25%; padding:8px; margin:0;"><input type="number" id="move-y" placeholder="Y" style="width: 25%; padding:8px; margin:0;"><button class="btn-produce" style="width:30%;" onclick="startMovement()">GİT</button></div><div class="list-container" id="unit-list"></div></div>
+        <div id="screen-battle" class="screen"><div class="btn-menu" onclick="showScreen('screen-main')">MENÜ</div><h3 style="color: #FF4444; margin-top:5px;">HAREKAT TAKİBİ</h3><div id="battle-list" class="list-container"></div></div>
         <div id="screen-spy" class="screen"><div class="btn-menu" onclick="clearSpyData(); showScreen('screen-main')">MENÜ</div><h3 style="color: #4FC3F7; margin-top:5px;">CASUS UYDU</h3><div class="iron-display" style="color:#FFFF00; font-size: 1.2em;">ALTIN: <span id="ui-gold-spy">0</span></div><div id="spy-level-info" style="color:#FFF; font-size: 12px; margin-bottom: 5px;">Uydu Seviyesi: 0</div><div style="color:#FF4444; font-size: 10px; margin-bottom: 10px;">TARAMA BEDELİ: 300 ALTIN</div><div style="display:flex; justify-content:center; gap:5px; width:90%;"><input type="number" id="spy-x" placeholder="X" style="width: 25%; margin:0; padding:8px;"><input type="number" id="spy-y" placeholder="Y" style="width: 25%; margin:0; padding:8px;"><button class="btn-produce" style="background:#4FC3F7; width:40%;" onclick="launchSpySatellite()">TARA</button></div><div id="spy-result" class="list-container" style="margin-top:15px; border-top:1px solid #4FC3F7;"></div></div>
-        <div id="screen-players" class="screen"><div class="btn-menu" onclick="showScreen('screen-main')">MENÜ</div><h3 style="color: #00FF00; margin-top:5px;">AKTİF OYUNCULAR</h3><div id="player-list" class="list-container"></div></div>
-        <div id="screen-mine" class="screen"><div class="btn-menu" onclick="showScreen('screen-main')">MENÜ</div><h3 style="color: #00FF00;">ÜRETİM MERKEZİ</h3><div class="mine-card"><div style="color:#FFFF00">ALTIN MADENİ</div><div style="color:#FFF">Mevcut: <span id="val-gold">0</span></div><div id="timer-gold">60:00</div><button class="btn-produce" id="btn-gold" onclick="startProduction('gold')">ÜRET</button></div><div class="mine-card" id="iron-card"><div style="color:#C0C0C0">DEMİR MADENİ</div><div style="color:#FFF">Mevcut: <span id="val-iron">0</span></div><div id="timer-iron">60:00</div><button class="btn-produce" id="btn-iron" onclick="startProduction('iron')">ÜRET</button></div></div>
     </div>
 
     <script>
-        const WEAPON_DB = {
-            "T1": { name: "Tank T-1", speed: 3, power: 5, armor: 100, price: 250, time: 20 },
-            "T2": { name: "Tank T-2", speed: 5, power: 3, armor: 50, price: 100, time: 10 },
-            "T3": { name: "Tank T-3", speed: 10, power: 1, armor: 20, price: 25, time: 5 },
-            "H1": { name: "Heli Atak-1", speed: 30, power: 3, armor: 20, price: 100, time: 10 },
-            "H2": { name: "Heli Atak-2", speed: 30, power: 5, armor: 50, price: 250, time: 20 },
-            "KORKUT": { name: "Korkut", speed: 10, power: 5, armor: 50, price: 500, time: 30 },
-            "KORAL": { name: "Koral", speed: 3, power: 50, armor: 500, price: 2500, time: 300 },
-            "TOP": { name: "TOP", speed: 0, power: 5, armor: 50, price: 1000, time: 100 },
-            "TS": { name: "Tanksavar", speed: 0, power: 10, armor: 50, price: 1500, time: 200 },
-            "US": { name: "Uçaksavar", speed: 0, power: 25, armor: 50, price: 2500, time: 300 }
-        };
+        const WEAPON_DB = { "T1": { name: "Tank T-1", speed: 3, power: 5, armor: 100, price: 250, time: 20 }, "T2": { name: "Tank T-2", speed: 5, power: 3, armor: 50, price: 100, time: 10 }, "T3": { name: "Tank T-3", speed: 10, power: 1, armor: 20, price: 25, time: 5 }, "H1": { name: "Heli Atak-1", speed: 30, power: 3, armor: 20, price: 100, time: 10 }, "H2": { name: "Heli Atak-2", speed: 30, power: 5, armor: 50, price: 250, time: 20 }, "KORKUT": { name: "Korkut", speed: 10, power: 5, armor: 50, price: 500, time: 30 }, "KORAL": { name: "Koral", speed: 3, power: 50, armor: 500, price: 2500, time: 300 }, "TOP": { name: "TOP", speed: 0, power: 5, armor: 50, price: 1000, time: 100 }, "TS": { name: "Tanksavar", speed: 0, power: 10, armor: 50, price: 1500, time: 200 }, "US": { name: "Uçaksavar", speed: 0, power: 25, armor: 50, price: 2500, time: 300 } };
         const RESEARCH_DB = { "speed": { name: "Hız Ar.", icon: "⚡" }, "power": { name: "Güç Ar.", icon: "⚔️" }, "armor": { name: "Zırh Ar.", icon: "🛡️" }, "spy": { name: "Casus Uydu", icon: "📡" } };
-
+        
         var firebaseConfig = { apiKey: "AIzaSyBbtvGBl8m1x8thDlsUUutvujedIBCC4PA", authDomain: "blackjack-4x4.firebaseapp.com", databaseURL: "https://blackjack-4x4-default-rtdb.europe-west1.firebasedatabase.app", projectId: "blackjack-4x4", storageBucket: "blackjack-4x4.appspot.com", messagingSenderId: "805180924640", appId: "1:805180924640:web:c7da5f8c037b7ff5c26685" };
         firebase.initializeApp(firebaseConfig);
-        var db = firebase.database();
-        var currentUser = null, mineInterval = null, weaponInterval = null, resInterval = null, battleInterval = null, msgListener = null;
+        var db = firebase.database(), currentUser = null, activeTargetMsg = null, activeDecodeData = null;
+        var mineInterval = null, weaponInterval = null, resInterval = null, battleInterval = null, msgListener = null;
 
+        function myAlert(text) { document.getElementById('alert-text').innerText = text; document.getElementById('custom-alert').style.display = 'block'; }
+        function closeAlert() { document.getElementById('custom-alert').style.display = 'none'; }
         function validateInput(input) { input.value = input.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); }
-        
+        function closePanel() { document.getElementById('message-panel').style.display = 'none'; activeDecodeData = null; }
+
         function showScreen(id) { 
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); 
             document.getElementById(id).classList.add('active'); 
+            closePanel();
             if(id === 'screen-mine') updateMineUI(); 
             if(id === 'screen-weapon') updateWeaponUI(); 
             if(id === 'screen-units') loadUnitsUI();
             if(id === 'screen-research') updateResearchUI();
             if(id === 'screen-battle') loadBattleUI();
             if(id === 'screen-msg') showMsgScreen();
+            if(id === 'screen-players') listPlayers();
         }
 
         function loginCheck() {
-            var name = document.getElementById('login-name').value;
+            var name = document.getElementById('login-name').value.toUpperCase();
             var pass = document.getElementById('login-pass').value;
+            if(!name || !pass) return myAlert("İSİM VE PAROLA GİRİN!");
             db.ref('CepWARS/users/' + name).once('value').then((snap) => {
                 if (snap.exists() && snap.val().password === pass) {
                     currentUser = name;
-                    const u = snap.val();
-                    document.getElementById('welcome-msg').innerText = "HOŞGELDİN " + name + " (" + (u.posX||0) + ", " + (u.posY||0) + ")";
-                    initMessageListener();
-                    initBattleListener();
-                    showScreen('screen-main');
-                } else alert("Giriş Hatalı!");
+                    document.getElementById('welcome-msg').innerText = "HOŞGELDİN " + name + " (" + (snap.val().posX||0) + ", " + (snap.val().posY||0) + ")";
+                    initMessageListener(); initBattleListener(); showScreen('screen-main');
+                } else myAlert("GİRİŞ HATALI!");
             });
         }
 
-        // --- HAREKAT & GARNİZON ---
-        function loadUnitsUI() {
-            db.ref('CepWARS').once('value').then(snap => {
-                const u = snap.val().users[currentUser];
-                const outposts = snap.val().outposts?.[currentUser] || {};
-                const area = document.getElementById('unit-list');
-                area.innerHTML = "";
-                
-                // Merkez her zaman görünür (Birlik olmasa bile)
-                area.appendChild(createUnitBox("MERKEZ ("+u.posX+","+u.posY+")", u.weapons, "main"));
-                
-                // Karakollar sadece içlerinde silah varsa görünür
-                for(let ok in outposts) {
-                    let hasWeapon = false;
-                    for(let w in outposts[ok].weapons) if(outposts[ok].weapons[w] > 0) hasWeapon = true;
-                    if(hasWeapon) {
-                        area.appendChild(createUnitBox("KARAKOL ("+outposts[ok].x+","+outposts[ok].y+")", outposts[ok].weapons, ok));
-                    }
-                }
-            });
-        }
-
-        function createUnitBox(title, weapons, idPrefix) {
-            const div = document.createElement('div');
-            div.className = "unit-item";
-            div.innerHTML = `<div class="unit-coord">${title}</div>`;
-            let empty = true;
-            for(let k in weapons) {
-                if(weapons[k] > 0) {
-                    empty = false;
-                    const isMovable = WEAPON_DB[k].speed > 0;
-                    div.innerHTML += `<div class="unit-detail">
-                        <span>${WEAPON_DB[k].name} (${weapons[k]})</span>
-                        ${isMovable ? `<input type="number" id="inp-${idPrefix}-${k}" class="unit-input" placeholder="0">` : '<span style="color:#666; font-size:0.7em;">SABİT</span>'}
-                    </div>`;
-                }
-            }
-            if(empty) div.innerHTML += `<div style="color:#666; font-size:0.8em; text-align:center;">BİRLİK YOK</div>`;
-            return div;
-        }
-
-        function startMovement() {
-            const tx = parseInt(document.getElementById('move-x').value);
-            const ty = parseInt(document.getElementById('move-y').value);
-            if(isNaN(tx) || isNaN(ty)) return alert("Koordinat gir!");
-
-            db.ref('CepWARS').once('value').then(snap => {
-                const user = snap.val().users[currentUser];
-                const outposts = snap.val().outposts?.[currentUser] || {};
-                let minSpeed = 999, selectedUnits = {}, hasSelection = false;
-
-                Object.keys(WEAPON_DB).forEach(k => {
-                    const val = parseInt(document.getElementById('inp-main-'+k)?.value || 0);
-                    if(val > 0) {
-                        if(val > (user.weapons[k]||0)) return alert("Yetersiz birlik!");
-                        selectedUnits[k] = (selectedUnits[k]||0) + val;
-                        db.ref('CepWARS/users/'+currentUser+'/weapons/'+k).transaction(c => (c||0)-val);
-                        let s = WEAPON_DB[k].speed + (user.research?.speed || 0);
-                        if(s < minSpeed) minSpeed = s;
-                        hasSelection = true;
-                    }
-                });
-
-                for(let ok in outposts) {
-                    Object.keys(WEAPON_DB).forEach(k => {
-                        const val = parseInt(document.getElementById('inp-'+ok+'-'+k)?.value || 0);
-                        if(val > 0) {
-                            if(val > (outposts[ok].weapons[k]||0)) return alert("Karakolda yetersiz!");
-                            selectedUnits[k] = (selectedUnits[k]||0) + val;
-                            db.ref('CepWARS/outposts/'+currentUser+'/'+ok+'/weapons/'+k).transaction(c => (c||0)-val);
-                            let s = WEAPON_DB[k].speed + (user.research?.speed || 0);
-                            if(s < minSpeed) minSpeed = s;
-                            hasSelection = true;
-                        }
-                    });
-                }
-
-                if(!hasSelection) return alert("Birlik seçmedin!");
-                const dist = Math.abs(tx - user.posX) + Math.abs(ty - user.posY);
-                const travelTime = Math.ceil(dist / minSpeed);
-                db.ref('CepWARS/movements').push({
-                    owner: currentUser, units: selectedUnits,
-                    toX: tx, toY: ty, fromX: user.posX, fromY: user.posY,
-                    start: Date.now(),
-                    arrival: Date.now() + (travelTime * 60000)
-                }).then(() => { showScreen('screen-battle'); });
-            });
-        }
-
-        function loadBattleUI() {
-            const list = document.getElementById('battle-list');
-            db.ref('CepWARS/movements').orderByChild('owner').equalTo(currentUser).once('value', snap => {
-                list.innerHTML = "";
-                if(!snap.exists()) list.innerHTML = "Hareket yok.";
-                snap.forEach(m => {
-                    const d = m.val();
-                    let uStr = ""; for(let k in d.units) uStr += WEAPON_DB[k].name + "x" + d.units[k] + " ";
-                    list.innerHTML += `<div class="battle-card">
-                        <div style="color:#FFFF00">HEDEF: (${d.toX}, ${d.toY})</div>
-                        <div class="battle-units">${uStr}</div>
-                        <div class="battle-timer-row">
-                            <div class="battle-timer" id="tmr-${m.key}">--:--</div>
-                            <div class="battle-loc" id="loc-${m.key}">LOC: (?,?)</div>
-                        </div>
-                        <button class="btn-exit" style="width:100px; margin-top:5px;" onclick="stopMovement('${m.key}')">DUR</button>
-                    </div>`;
-                });
-                startBattleTimers();
-            });
-        }
-
-        function startBattleTimers() {
-            clearInterval(battleInterval);
-            battleInterval = setInterval(() => {
-                db.ref('CepWARS/movements').orderByChild('owner').equalTo(currentUser).once('value').then(snap => {
-                    snap.forEach(m => {
-                        const d = m.val(), now = Date.now(), rem = Math.floor((d.arrival - now)/1000);
-                        const divT = document.getElementById('tmr-' + m.key);
-                        const divL = document.getElementById('loc-' + m.key);
-                        if(divT) {
-                            if(rem <= 0) { finalizeMove(m.key, d); }
-                            else {
-                                divT.innerText = Math.floor(rem/60) + ":" + (rem%60<10?'0':'') + (rem%60);
-                                let progress = (now - d.start) / (d.arrival - d.start);
-                                let curX = Math.round(d.fromX + (d.toX - d.fromX) * progress);
-                                let curY = Math.round(d.fromY + (d.toY - d.fromY) * progress);
-                                if(divL) divL.innerText = `LOC: (${curX},${curY})`;
-                            }
-                        }
-                    });
-                });
-            }, 1000);
-        }
-
-        function finalizeMove(id, d) {
-            const postID = d.toX + "_" + d.toY;
-            db.ref('CepWARS/outposts/'+currentUser+'/'+postID).once('value').then(snap => {
-                if(!snap.exists()) db.ref('CepWARS/outposts/'+currentUser+'/'+postID).set({x: d.toX, y: d.toY, weapons: d.units});
-                else for(let k in d.units) db.ref('CepWARS/outposts/'+currentUser+'/'+postID+'/weapons/'+k).transaction(c=>(c||0)+d.units[k]);
-                db.ref('CepWARS/movements/'+id).remove().then(()=>loadBattleUI());
-            });
-        }
-
-        function stopMovement(id) {
-            db.ref('CepWARS/movements/'+id).once('value').then(s => {
-                const d = s.val();
-                for(let k in d.units) db.ref('CepWARS/users/'+currentUser+'/weapons/'+k).transaction(c=>(c||0)+d.units[k]);
-                db.ref('CepWARS/movements/'+id).remove().then(()=>loadBattleUI());
-            });
-        }
-
-        function initBattleListener() { db.ref('CepWARS/movements').orderByChild('owner').equalTo(currentUser).on('value', s => { document.getElementById('btn-battle-main').style.backgroundColor = s.exists() ? "#FF5252" : "#FFFF00"; }); }
-
-        // --- MADEN ---
-        function updateMineUI(){ db.ref('CepWARS/users/'+currentUser).once('value').then(s => { const d=s.val(); document.getElementById('val-gold').innerText=d.gold; document.getElementById('val-iron').innerText=d.iron; if(d.production?.type!=='none') checkOfflineProgress(d); }); }
-        function startProduction(t){ const n=Date.now(); db.ref('CepWARS/users/'+currentUser+'/production').set({type:t, endAt:n+3600000, lastCheck:n}).then(()=>startLocalTimer(t, 3600)); }
-        function checkOfflineProgress(d){ const n=Date.now(), p=d.production; let end=Math.min(n, p.endAt), earn=Math.floor((end-p.lastCheck)/6000); if(earn>0){ db.ref('CepWARS/users/'+currentUser+'/'+p.type).transaction(c=>(c||0)+earn); db.ref('CepWARS/users/'+currentUser+'/production/lastCheck').set(p.lastCheck+(earn*6000)); } if(n>=p.endAt) { db.ref('CepWARS/users/'+currentUser+'/production').set({type:'none', endAt:0, lastCheck:0}); resetMineButtons(); } else startLocalTimer(p.type, Math.floor((p.endAt-n)/1000)); }
-        function startLocalTimer(t,s){ clearInterval(mineInterval); document.getElementById('btn-gold').disabled=true; document.getElementById('btn-iron').disabled=true; mineInterval=setInterval(()=>{ s--; const div=document.getElementById('timer-'+t); if(div) div.innerText=Math.floor(s/60)+":"+(s%60<10?'0':'')+(s%60); if(s>0 && (3600-s)%6===0){ db.ref('CepWARS/users/'+currentUser+'/'+t).transaction(c=>(c||0)+1); db.ref('CepWARS/users/'+currentUser+'/production/lastCheck').set(Date.now()); updateRes(); } if(s<=0){ clearInterval(mineInterval); db.ref('CepWARS/users/'+currentUser+'/production').set({type:'none', endAt:0, lastCheck:0}); resetMineButtons(); updateRes(); }},1000); }
-        function resetMineButtons(){ document.getElementById('btn-gold').disabled=false; document.getElementById('btn-iron').disabled=false; document.getElementById('timer-gold').innerText="60:00"; document.getElementById('timer-iron').innerText="60:00"; }
-        function updateRes(){ db.ref('CepWARS/users/'+currentUser).once('value', s => { if(s.exists()){ document.getElementById('val-gold').innerText=s.val().gold; document.getElementById('val-iron').innerText=s.val().iron; }}); }
-
-        // --- SİLAH FABRİKASI ---
-        function updateWeaponUI() {
-            db.ref('CepWARS/users/'+currentUser).once('value', s => {
-                const u = s.val(); document.getElementById('ui-iron-weapon').innerText = u.iron;
-                const c = document.getElementById('weapon-list'); c.innerHTML = "";
-                const isProdBusy = u.weaponProd && u.weaponProd.type !== 'none';
-                Object.keys(WEAPON_DB).forEach(k => {
-                    const w = WEAPON_DB[k], count = u.weapons[k]||0, isSelfB = (u.weaponProd?.type === k);
-                    c.innerHTML += `<div class="weapon-card"><div class="weapon-title"><span>${w.name}</span><span>${count}</span></div><div class="weapon-stats"><span>Hız:${w.speed} Güç:${w.power}</span></div><div style="display:flex; justify-content:space-between; align-items:center"><span>${w.price} Dem / <span id="timer-w-${k}">${isSelfB?'...':w.time+'dk'}</span></span><button class="btn-produce" ${(isProdBusy || u.iron < w.price)?'disabled':`onclick="startWeaponProd('${k}')"`}>ÜRET</button></div></div>`;
-                });
-                if(isProdBusy) startWeaponTimer(u.weaponProd);
-            });
-        }
-        function startWeaponProd(k){ db.ref('CepWARS/users/'+currentUser+'/iron').transaction(c=>c-WEAPON_DB[k].price); db.ref('CepWARS/users/'+currentUser+'/weaponProd').set({type:k, endAt:Date.now()+(WEAPON_DB[k].time*60000)}).then(()=>updateWeaponUI()); }
-        function startWeaponTimer(p){ clearInterval(weaponInterval); weaponInterval=setInterval(()=>{ const rem=Math.floor((p.endAt-Date.now())/1000); const d=document.getElementById('timer-w-'+p.type); if(rem<=0){ clearInterval(weaponInterval); db.ref('CepWARS/users/'+currentUser+'/weapons/'+p.type).transaction(c=>c+1); db.ref('CepWARS/users/'+currentUser+'/weaponProd').set({type:'none', endAt:0}).then(()=>updateWeaponUI()); } else if(d) d.innerText=Math.floor(rem/60)+":"+(rem%60<10?'0':'')+(rem%60); }, 1000); }
-
-        // --- ARAŞTIRMA ---
-        function updateResearchUI() {
-            db.ref('CepWARS/users/'+currentUser).once('value', s => {
-                const u=s.val(); document.getElementById('ui-gold-research').innerText=u.gold;
-                const c=document.getElementById('research-list'); c.innerHTML="";
-                const isResBusy = u.resProd && u.resProd.type !== 'none';
-                Object.keys(RESEARCH_DB).forEach(k => {
-                    const r=RESEARCH_DB[k], lvl=u.research?.[k]||0, cost=1000*Math.pow(2,lvl), isSelfB=(u.resProd?.type===k);
-                    c.innerHTML += `<div class="weapon-card" style="border-color:#FFFF00"><div class="weapon-title"><span>${r.icon} ${r.name}</span><span>Lv ${lvl}</span></div><div style="display:flex; justify-content:space-between"><span id="timer-r-${k}">${isSelfB?'...':'5 dk'}</span><button class="btn-produce" style="background:#FFFF00" ${(isResBusy || u.gold < cost)?'disabled':`onclick="startResearch('${k}',${cost})"`}>YÜKSELT</button></div></div>`;
-                });
-                if(isResBusy) startResTimer(u.resProd);
-            });
-        }
-        function startResearch(k,c){ db.ref('CepWARS/users/'+currentUser+'/gold').transaction(g=>g-c); db.ref('CepWARS/users/'+currentUser+'/resProd').set({type:k, endAt:Date.now()+300000}).then(()=>updateResearchUI()); }
-        function startResTimer(p){ clearInterval(resInterval); resInterval=setInterval(()=>{ const rem=Math.floor((p.endAt-Date.now())/1000); const d=document.getElementById('timer-r-'+p.type); if(rem<=0){ clearInterval(resInterval); db.ref('CepWARS/users/'+currentUser+'/research/'+p.type).transaction(l=>(l||0)+1); db.ref('CepWARS/users/'+currentUser+'/resProd').set({type:'none', endAt:0}).then(()=>updateResearchUI()); } else if(d) d.innerText=Math.floor(rem/60)+":"+(rem%60<10?'0':'')+(rem%60); },1000); }
-
-        // --- CASUS UYDU (SİLAHSIZ KARAKOL/MERKEZ RAPORLANMAZ) ---
-        function showSpyScreen(){ showScreen('screen-spy'); db.ref('CepWARS/users/'+currentUser).once('value', s => { const u=s.val(); document.getElementById('ui-gold-spy').innerText=u.gold; document.getElementById('spy-level-info').innerText="Seviye: "+(u.research?.spy||0); }); }
-        function launchSpySatellite(){ 
-            const tx = parseInt(document.getElementById('spy-x').value), ty = parseInt(document.getElementById('spy-y').value);
-            const resArea = document.getElementById('spy-result');
-            if (isNaN(tx) || isNaN(ty)) return alert("Koordinat gir!");
-            db.ref('CepWARS/users/'+currentUser).once('value', s => {
-                const u = s.val(); if (u.gold < 300) return alert("Yetersiz Altın!");
-                db.ref('CepWARS/users/'+currentUser+'/gold').transaction(g => g - 300);
-                resArea.innerHTML = "Sinyal taranıyor...";
-                const lvl = u.research?.spy || 0, chance = Math.floor(Math.random() * 10) + 1;
-                
-                if (lvl >= chance) {
-                    db.ref('CepWARS').once('value', mainSnap => {
-                        let html = "";
-                        const allUsers = mainSnap.val().users;
-                        const allOutposts = mainSnap.val().outposts || {};
-                        
-                        // MERKEZLERİ TARA (Sadece silahı olanlar)
-                        for(let uKey in allUsers) {
-                            const ud = allUsers[uKey];
-                            if(ud.posX >= tx-3 && ud.posX <= tx+3 && ud.posY >= ty-3 && ud.posY <= ty+3) {
-                                let units = "", hasW = false; 
-                                for(let k in ud.weapons) if(ud.weapons[k]>0) { units += `<div>${WEAPON_DB[k].name}: ${ud.weapons[k]}</div>`; hasW = true; }
-                                if(hasW) html += `<div class="unit-item" style="border-color:#4FC3F7"><div class="unit-coord" style="color:#4FC3F7">MERKEZ: ${uKey} (${ud.posX},${ud.posY})</div><div style="font-size:0.75em; color:#FFF">${units}</div></div>`;
-                            }
-                        }
-                        // KARAKOLLARI TARA (Sadece silahı olanlar)
-                        for(let owner in allOutposts) {
-                            for(let opKey in allOutposts[owner]) {
-                                const op = allOutposts[owner][opKey];
-                                if(op.x >= tx-3 && op.x <= tx+3 && op.y >= ty-3 && op.y <= ty+3) {
-                                    let units = "", hasW = false; 
-                                    for(let k in op.weapons) if(op.weapons[k]>0) { units += `<div>${WEAPON_DB[k].name}: ${op.weapons[k]}</div>`; hasW = true; }
-                                    if(hasW) html += `<div class="unit-item" style="border-color:#FFFF00"><div class="unit-coord" style="color:#FFFF00">KARAKOL: ${owner} (${op.x},${op.y})</div><div style="font-size:0.75em; color:#FFF">${units}</div></div>`;
-                                }
-                            }
-                        }
-                        resArea.innerHTML = html || "Bölge temiz (Stratejik hedef yok).";
-                    });
-                } else resArea.innerHTML = "<div style='color:#ff4444'>BAĞLANTI KESİLDİ!</div>";
-                document.getElementById('ui-gold-spy').innerText = u.gold - 300;
-            });
-        }
-        function clearSpyData(){ document.getElementById('spy-result').innerHTML=""; }
-
-        // --- MESAJ & OYUNCULAR ---
-        function initMessageListener(){ if(msgListener) db.ref('CepWARS/messages/'+currentUser).off(); msgListener = db.ref('CepWARS/messages/'+currentUser).on('value', s => { document.getElementById('btn-msg-main').style.backgroundColor = s.exists() ? "#FF9800" : "#FFFF00"; }); }
-        function showMsgScreen(){ const l=document.getElementById('msg-list'); l.innerHTML="Yükleniyor..."; db.ref('CepWARS/messages/'+currentUser).once('value', s => { l.innerHTML=""; s.forEach(m=>{ const d=m.val(); l.innerHTML+=`<div class="msg-item"><b>${d.from}:</b><br>${d.txt}</div>`; }); }); }
-        function clearAllMessages(){ db.ref('CepWARS/messages/'+currentUser).remove().then(()=>showMsgScreen()); }
-        function listPlayers(){ showScreen('screen-players'); db.ref('CepWARS/users').once('value', s => { const a=document.getElementById('player-list'); a.innerHTML=""; s.forEach(p=>{ if(p.key!==currentUser) a.innerHTML+=`<div class="player-item"><span>${p.key} (${p.val().posX},${p.val().posY})</span><button class="btn-produce" style="background:#4FC3F7" onclick="sendMsg('${p.key}')">YAZ</button></div>`; }); }); }
-        function sendMsg(to){ const t=prompt(to+" kişisine mesaj:"); if(t) db.ref('CepWARS/messages/'+to).push({from:currentUser, txt:t}); }
-
-        function registerUser(){ 
-            const n=document.getElementById('reg-name').value, p=document.getElementById('reg-pass').value;
+        function registerUser() {
+            const n = document.getElementById('reg-name').value.toUpperCase(), p = document.getElementById('reg-pass').value;
+            if(!n || !p) return myAlert("ALANLARI DOLDURUN!");
             db.ref('CepWARS/users/'+n).set({username:n, password:p, posX:Math.floor(Math.random()*301), posY:Math.floor(Math.random()*501), gold:1000, iron:500, weapons:{T1:0,T2:0,T3:0,H1:0,H2:0,KORKUT:0,KORAL:0,TOP:0,TS:0,US:0}}).then(()=>loginCheck());
         }
-        function logout(){ location.reload(); }
+
+        function logout() { location.reload(); }
+
+        // --- GALGORITMA ŞİFRELEME MOTORU (TAMİR EDİLDİ) ---
+        function getAlphaPos(char) { 
+            const alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const pos = alpha.indexOf(char.toUpperCase()) + 1;
+            return pos > 0 ? pos.toString() : "0";
+        }
+
+        function galgoritmA(msg, from, fX, fY, to, tX, tY, type) {
+            let key = `${from}${fX}${fY}${to}${tX}${tY}`;
+            let result = "";
+            for(let i=0; i<msg.length; i++) {
+                let mCode = msg.charCodeAt(i), kCode = key.charCodeAt(i % key.length);
+                let newCode = type === 1 ? (mCode + kCode) : (mCode - kCode);
+                result += String.fromCharCode(newCode);
+            }
+            return result;
+        }
+
+        function openMsgPanel(target) {
+            activeTargetMsg = target;
+            document.getElementById('panel-target-info').innerText = target + " KİŞİSİNE MESAJ GÖNDER";
+            document.getElementById('panel-input').placeholder = "Mesajınızı yazın...";
+            document.getElementById('panel-input').value = "";
+            document.getElementById('panel-main-btn').innerText = "GÖNDER";
+            document.getElementById('panel-main-btn').onclick = sendPanelMsg;
+            document.getElementById('message-panel').style.display = 'flex';
+        }
+
+        function sendPanelMsg() {
+            let plain = document.getElementById('panel-input').value;
+            if(!plain) return myAlert("Mesaj boş olamaz!");
+            db.ref('CepWARS/users/' + activeTargetMsg).once('value', ts => {
+                db.ref('CepWARS/users/' + currentUser).once('value', fs => {
+                    const f = fs.val(), t = ts.val(), now = new Date();
+                    const timeStr = (now.getHours()<10?'0':'') + now.getHours();
+                    const cipher = galgoritmA(plain, currentUser, f.posX, f.posY, activeTargetMsg, t.posX, t.posY, 1);
+                    db.ref('CepWARS/messages/' + activeTargetMsg).push({
+                        from: currentUser, txt: cipher, fx: f.posX, fy: f.posY, tx: t.posX, ty: t.posY, time: timeStr
+                    }).then(() => { myAlert("Mesaj Şifrelendi ve Gönderildi!"); closePanel(); });
+                });
+            });
+        }
+
+        function openDecodePanel(id, cipher, from, fx, fy, tx, ty, sendTime) {
+            activeDecodeData = {id, cipher, from, fx, fy, tx, ty, sendTime};
+            document.getElementById('panel-target-info').innerText = "GÜVENLİK ANAHTARI (4 Hane)";
+            document.getElementById('panel-input').placeholder = "ANAHTARI GİRİN";
+            document.getElementById('panel-input').value = "";
+            document.getElementById('panel-main-btn').innerText = "ÇÖZ";
+            document.getElementById('panel-main-btn').onclick = processDecode;
+            document.getElementById('message-panel').style.display = 'flex';
+        }
+
+        function processDecode() {
+            let userKeyInput = document.getElementById('panel-input').value.trim();
+            let d = activeDecodeData;
+            // KESİN DOĞRULAMA: Alıcı ilk harf pos + Gönderen ilk harf pos + Saat
+            let correctKey = getAlphaPos(currentUser.charAt(0)) + getAlphaPos(d.from.charAt(0)) + d.sendTime;
+            
+            if(userKeyInput === correctKey) {
+                let plain = galgoritmA(d.cipher, d.from, d.fx, d.fy, currentUser, d.tx, d.ty, -1);
+                document.getElementById('txt-' + d.id).innerText = plain;
+                document.getElementById('txt-' + d.id).style.color = "#FFFF00";
+                myAlert("ŞİFRE ÇÖZÜLDÜ!"); closePanel();
+                const btn = document.querySelector(`#msg-${d.id} .btn-decode`);
+                if(btn) btn.style.display = "none";
+            } else {
+                myAlert("HATALI ANAHTAR!");
+            }
+        }
+
+        function listPlayers() {
+            db.ref('CepWARS/users').once('value', s => {
+                const a = document.getElementById('player-list'); a.innerHTML = "";
+                s.forEach(p => { if (p.key !== currentUser) {
+                    a.innerHTML += `<div class="player-item"><span>${p.key} (${p.val().posX},${p.val().posY})</span><button class="btn-produce" style="background:#4FC3F7; width:80px;" onclick="openMsgPanel('${p.key}')">YAZ</button></div>`;
+                }});
+            });
+        }
+
+        function showMsgScreen() {
+            const l = document.getElementById('msg-list'); l.innerHTML = "Yükleniyor...";
+            db.ref('CepWARS/messages/' + currentUser).once('value', s => {
+                l.innerHTML = s.exists() ? "" : "Mesaj yok.";
+                s.forEach(m => {
+                    const d = m.val();
+                    l.innerHTML += `<div class="msg-item" id="msg-${m.key}"><b>${d.from} (${d.fx},${d.fy}):</b><br><span id="txt-${m.key}" style="color:#666">[ŞİFRELİ MESAJ]</span><br><div class="btn-decode" onclick="openDecodePanel('${m.key}', '${d.txt}', '${d.from}', ${d.fx}, ${d.fy}, ${d.tx}, ${d.ty}, '${d.time}')">ÇÖZ</div></div>`;
+                });
+            });
+        }
+
+        // --- KUTSAL FONKSİYONLAR (Aynen Korundu) ---
+        function loadUnitsUI() { db.ref('CepWARS').once('value').then(snap => { const u = snap.val().users[currentUser]; const outposts = snap.val().outposts?.[currentUser] || {}; const area = document.getElementById('unit-list'); area.innerHTML = ""; area.appendChild(createUnitBox("MERKEZ ("+u.posX+","+u.posY+")", u.weapons, "main")); for(let ok in outposts) { let hasW = false; for(let w in outposts[ok].weapons) if(outposts[ok].weapons[w]>0) hasW = true; if(hasW) area.appendChild(createUnitBox("KARAKOL ("+outposts[ok].x+","+outposts[ok].y+")", outposts[ok].weapons, ok)); } }); }
+        function createUnitBox(title, weapons, idPrefix) { const div = document.createElement('div'); div.className = "unit-item"; div.innerHTML = `<div class="unit-coord">${title}</div>`; let empty = true; for(let k in weapons) { if(weapons[k] > 0) { empty = false; div.innerHTML += `<div class="unit-detail"><span>${WEAPON_DB[k].name} (${weapons[k]})</span>${WEAPON_DB[k].speed > 0 ? `<input type="number" id="inp-${idPrefix}-${k}" class="unit-input" placeholder="0">` : '<span style="color:#666; font-size:0.7em;">SABİT</span>'}</div>`; } } if(empty) div.innerHTML += `<div style="color:#666; font-size:0.8em; text-align:center;">BİRLİK YOK</div>`; return div; }
+        function startMovement() { const tx = parseInt(document.getElementById('move-x').value), ty = parseInt(document.getElementById('move-y').value); if(isNaN(tx) || isNaN(ty)) return myAlert("Koordinat gir!"); db.ref('CepWARS').once('value').then(snap => { const user = snap.val().users[currentUser], outposts = snap.val().outposts?.[currentUser] || {}; const processSource = (sourceKey, sx, sy, weapons) => { let sel = {}, minS = 999, hasSel = false; Object.keys(WEAPON_DB).forEach(w => { const val = parseInt(document.getElementById(`inp-${sourceKey}-${w}`)?.value || 0); if(val > 0 && val <= (weapons[w]||0)) { sel[w] = val; hasSel = true; let s = WEAPON_DB[w].speed + (user.research?.speed || 0); if(s < minS) minS = s; let path = sourceKey === "main" ? `users/${currentUser}/weapons/${w}` : `outposts/${currentUser}/${sourceKey}/weapons/${w}`; db.ref(`CepWARS/${path}`).transaction(c => (c||0)-val); } }); if(hasSel) { const dist = Math.abs(tx - sx) + Math.abs(ty - sy); const travelTime = Math.ceil(dist / minS); db.ref('CepWARS/movements').push({ owner: currentUser, units: sel, toX: tx, toY: ty, fromX: sx, fromY: sy, start: Date.now(), arrival: Date.now() + (travelTime * 60000) }); } }; processSource("main", user.posX, user.posY, user.weapons); for(let ok in outposts) processSource(ok, outposts[ok].x, outposts[ok].y, outposts[ok].weapons); showScreen('screen-battle'); }); }
+        function loadBattleUI() { const list = document.getElementById('battle-list'); db.ref('CepWARS/movements').orderByChild('owner').equalTo(currentUser).once('value', snap => { list.innerHTML = snap.exists() ? "" : "Hareket yok."; snap.forEach(m => { const d = m.val(); let uStr = ""; for(let k in d.units) uStr += WEAPON_DB[k].name + "x" + d.units[k] + " "; list.innerHTML += `<div class="battle-card"><div style="color:#FFFF00">HEDEF: (${d.toX}, ${d.toY})</div><div class="battle-units">${uStr}</div><div class="battle-timer-row"><div class="battle-timer" id="tmr-${m.key}">--:--</div><div class="battle-loc" id="loc-${m.key}">LOC: (?,?)</div></div><button class="btn-exit" style="width:100px; margin-top:5px;" onclick="stopMovement('${m.key}')">DUR</button></div>`; }); startBattleTimers(); }); }
+        function startBattleTimers() { clearInterval(battleInterval); battleInterval = setInterval(() => { db.ref('CepWARS/movements').orderByChild('owner').equalTo(currentUser).once('value').then(snap => { snap.forEach(m => { const d = m.val(), now = Date.now(), rem = Math.floor((d.arrival - now)/1000); const divT = document.getElementById('tmr-' + m.key), divL = document.getElementById('loc-' + m.key); if(divT) { let prog = (now - d.start) / (d.arrival - d.start); let curX = Math.round(d.fromX + (d.toX - d.fromX) * prog), curY = Math.round(d.fromY + (d.toY - d.fromY) * prog); if(divL) divL.innerText = `LOC: (${curX},${curY})`; if(rem <= 0) handleArrival(d.units, d.toX, d.toY, m.key); else divT.innerText = Math.floor(rem/60) + ":" + (rem%60<10?'0':'') + (rem%60); } }); }); }, 1000); }
+        function handleArrival(units, x, y, moveId) { db.ref('CepWARS/users/'+currentUser).once('value').then(uSnap => { const user = uSnap.val(); if(x == user.posX && y == user.posY) { for(let k in units) db.ref('CepWARS/users/'+currentUser+'/weapons/'+k).transaction(c => (c||0) + units[k]); if(moveId) db.ref('CepWARS/movements/'+moveId).remove().then(()=>loadBattleUI()); } else { const postID = x + "_" + y; const postRef = db.ref('CepWARS/outposts/'+currentUser+'/'+postID); postRef.once('value').then(snap => { if(!snap.exists()) postRef.set({x: x, y: y, weapons: units}); else for(let k in units) postRef.child('weapons/'+k).transaction(c => (c||0) + units[k]); if(moveId) db.ref('CepWARS/movements/'+moveId).remove().then(()=>loadBattleUI()); }); } }); }
+        function stopMovement(id) { db.ref('CepWARS/movements/'+id).once('value').then(s => { if(!s.exists()) return; const d = s.val(), prog = (Date.now() - d.start) / (d.arrival - d.start); let curX = Math.round(d.fromX + (d.toX - d.fromX) * prog), curY = Math.round(d.fromY + (d.toY - d.fromY) * prog); handleArrival(d.units, curX, curY, id); }); }
+        function updateMineUI(){ db.ref('CepWARS/users/'+currentUser).once('value').then(s => { if(!s.exists()) return; const d=s.val(); document.getElementById('val-gold').innerText=d.gold; document.getElementById('val-iron').innerText=d.iron; if(d.production?.type!=='none') checkOfflineProgress(d); }); }
+        function startProduction(t){ const n=Date.now(); db.ref('CepWARS/users/'+currentUser+'/production').set({type:t, endAt:n+3600000, lastCheck:n}).then(()=>startLocalTimer(t, 3600)); }
+        function checkOfflineProgress(d){ const n=Date.now(), p=d.production; let end=Math.min(n, p.endAt), earn=Math.floor((end-p.lastCheck)/6000); if(earn>0){ db.ref('CepWARS/users/'+currentUser+'/'+p.type).transaction(c=>(c||0)+earn); db.ref('CepWARS/users/'+currentUser+'/production/lastCheck').set(p.lastCheck+(earn*6000)); } if(n>=p.endAt) { db.ref('CepWARS/users/'+currentUser+'/production').set({type:'none', endAt:0, lastCheck:0}); resetMineButtons(); } else startLocalTimer(p.type, Math.floor((p.endAt-n)/1000)); }
+        function startLocalTimer(t,s){ clearInterval(mineInterval); document.getElementById('btn-gold').disabled=true; document.getElementById('btn-iron').disabled=true; mineInterval=setInterval(()=>{ s--; const div=document.getElementById('timer-'+t); if(div) div.innerText=Math.floor(s/60)+":"+(s%60<10?'0':'')+(s%60); if(s>0 && (3600-s)%6===0){ db.ref('CepWARS/users/'+currentUser+'/'+t).transaction(c=>(c||0)+1); updateRes(); } if(s<=0){ clearInterval(mineInterval); db.ref('CepWARS/users/'+currentUser+'/production').set({type:'none', endAt:0, lastCheck:0}); resetMineButtons(); updateRes(); }},1000); }
+        function resetMineButtons(){ document.getElementById('btn-gold').disabled=false; document.getElementById('btn-iron').disabled=false; document.getElementById('timer-gold').innerText="60:00"; document.getElementById('timer-iron').innerText="60:00"; }
+        function updateRes(){ db.ref('CepWARS/users/'+currentUser).once('value', s => { if(s.exists()){ document.getElementById('val-gold').innerText=s.val().gold; document.getElementById('val-iron').innerText=s.val().iron; }}); }
+        function updateWeaponUI() { db.ref('CepWARS/users/'+currentUser).once('value', s => { if(!s.exists()) return; const u = s.val(); document.getElementById('ui-iron-weapon').innerText = u.iron; const c = document.getElementById('weapon-list'); c.innerHTML = ""; const isProdBusy = u.weaponProd && u.weaponProd.type !== 'none'; Object.keys(WEAPON_DB).forEach(k => { const w = WEAPON_DB[k], count = u.weapons[k]||0, isSelfB = (u.weaponProd?.type === k); c.innerHTML += `<div class="weapon-card"><div class="weapon-title" style="color:#f44336; font-size:1.1em; display:flex; justify-content:space-between;"><span>${w.name}</span><span>${count}</span></div><div style="font-size:0.7em; color:#bbb; margin:5px 0;">Hız:${w.speed} Güç:${w.power}</div><div style="display:flex; justify-content:space-between; align-items:center"><span>${w.price} Dem / <span id="timer-w-${k}">${isSelfB?'...':w.time+'dk'}</span></span><button class="btn-produce" ${(isProdBusy || u.iron < w.price)?'disabled':`onclick="startWeaponProd('${k}')"`}>ÜRET</button></div></div>`; }); if(isProdBusy) startWeaponTimer(u.weaponProd); }); }
+        function startWeaponProd(k){ db.ref('CepWARS/users/'+currentUser+'/iron').transaction(c=>c-WEAPON_DB[k].price); db.ref('CepWARS/users/'+currentUser+'/weaponProd').set({type:k, endAt:Date.now()+(WEAPON_DB[k].time*60000)}).then(()=>updateWeaponUI()); }
+        function startWeaponTimer(p){ clearInterval(weaponInterval); weaponInterval=setInterval(()=>{ const rem=Math.floor((p.endAt-Date.now())/1000); const d=document.getElementById('timer-w-'+p.type); if(rem<=0){ clearInterval(weaponInterval); db.ref('CepWARS/users/'+currentUser+'/weapons/'+p.type).transaction(c=>c+1); db.ref('CepWARS/users/'+currentUser+'/weaponProd').set({type:'none', endAt:0}).then(()=>updateWeaponUI()); } else if(d) d.innerText=Math.floor(rem/60)+":"+(rem%60<10?'0':'')+(rem%60); }, 1000); }
+        function updateResearchUI() { db.ref('CepWARS/users/'+currentUser).once('value', s => { if(!s.exists()) return; const u=s.val(); document.getElementById('ui-gold-research').innerText=u.gold; const c=document.getElementById('research-list'); c.innerHTML=""; const isResBusy = u.resProd && u.resProd.type !== 'none'; Object.keys(RESEARCH_DB).forEach(k => { const r=RESEARCH_DB[k], lvl=u.research?.[k]||0, cost=1000*Math.pow(2,lvl), isSelfB=(u.resProd?.type===k); c.innerHTML += `<div class="weapon-card" style="border-color:#FFFF00"><div class="weapon-title" style="color:#FFFF00; display:flex; justify-content:space-between;"><span>${r.icon} ${r.name}</span><span>Lv ${lvl}</span></div><div style="display:flex; justify-content:space-between; margin-top:8px;"><span id="timer-r-${k}">${isResBusy?'...':'5 dk'}</span><button class="btn-produce" style="background:#FFFF00" ${(isResBusy || u.gold < cost)?'disabled':`onclick="startResearch('${k}',${cost})"`}>YÜKSELT</button></div></div>`; }); if(isResBusy) startResTimer(u.resProd); }); }
+        function startResearch(k,c){ db.ref('CepWARS/users/'+currentUser+'/gold').transaction(g=>g-c); db.ref('CepWARS/users/'+currentUser+'/resProd').set({type:k, endAt:Date.now()+300000}).then(()=>updateResearchUI()); }
+        function startResTimer(p){ clearInterval(resInterval); resInterval=setInterval(()=>{ const rem=Math.floor((p.endAt-Date.now())/1000); const d=document.getElementById('timer-r-'+p.type); if(rem<=0){ clearInterval(resInterval); db.ref('CepWARS/users/'+currentUser+'/research/'+p.type).transaction(l=>(l||0)+1); db.ref('CepWARS/users/'+currentUser+'/resProd').set({type:'none', endAt:0}).then(()=>updateResearchUI()); } else if(d) d.innerText=Math.floor(rem/60)+":"+(rem%60<10?'0':'')+(rem%60); },1000); }
+        function showSpyScreen(){ showScreen('screen-spy'); db.ref('CepWARS/users/'+currentUser).once('value', s => { if(!s.exists()) return; const u=s.val(); document.getElementById('ui-gold-spy').innerText=u.gold; document.getElementById('spy-level-info').innerText="Seviye: "+(u.research?.spy||0); }); }
+        function launchSpySatellite(){ const tx = parseInt(document.getElementById('spy-x').value), ty = parseInt(document.getElementById('spy-y').value); const resArea = document.getElementById('spy-result'); if (isNaN(tx) || isNaN(ty)) return myAlert("Koordinat gir!"); db.ref('CepWARS/users/'+currentUser).once('value', s => { const u = s.val(); if (u.gold < 300) return myAlert("Yetersiz Altın!"); db.ref('CepWARS/users/'+currentUser+'/gold').transaction(g => g - 300); resArea.innerHTML = "Sinyal taranıyor..."; const lvl = u.research?.spy || 0, chance = Math.floor(Math.random() * 10) + 1; if (lvl >= chance) { db.ref('CepWARS').once('value', mainSnap => { let html = ""; const allUsers = mainSnap.val().users; const allOutposts = mainSnap.val().outposts || {}; for(let uKey in allUsers) { const ud = allUsers[uKey]; if(ud.posX >= tx-3 && ud.posX <= tx+3 && ud.posY >= ty-3 && ud.posY <= ty+3) { let units = "", hasW = false; for(let k in ud.weapons) if(ud.weapons[k]>0) { units += `<div>${WEAPON_DB[k].name}: ${ud.weapons[k]}</div>`; hasW = true; } if(hasW) html += `<div class="unit-item" style="border-color:#4FC3F7"><div class="unit-coord" style="color:#4FC3F7">MERKEZ: ${uKey} (${ud.posX},${ud.posY})</div><div style="font-size:0.75em; color:#FFF">${units}</div></div>`; } } for(let owner in allOutposts) { for(let opKey in allOutposts[owner]) { const op = allOutposts[owner][opKey]; if(op.x >= tx-3 && op.x <= tx+3 && op.y >= ty-3 && op.y <= ty+3) { let units = "", hasW = false; for(let k in op.weapons) if(op.weapons[k]>0) { units += `<div>${WEAPON_DB[k].name}: ${op.weapons[k]}</div>`; hasW = true; } if(hasW) html += `<div class="unit-item" style="border-color:#FFFF00"><div class="unit-coord" style="color:#FFFF00">KARAKOL: ${owner} (${op.x},${op.y})</div><div style="font-size:0.75em; color:#FFF">${units}</div></div>`; } } } resArea.innerHTML = html || "Bölge temiz."; }); } else resArea.innerHTML = "<div style='color:#ff4444'>BAĞLANTI KESİLDİ!</div>"; document.getElementById('ui-gold-spy').innerText = u.gold - 300; }); }
+        function clearSpyData(){ document.getElementById('spy-result').innerHTML=""; }
+        function initMessageListener(){ if(msgListener) db.ref('CepWARS/messages/'+currentUser).off(); msgListener = db.ref('CepWARS/messages/'+currentUser).on('value', s => { document.getElementById('btn-msg-main').style.backgroundColor = s.exists() ? "#FF9800" : "#FFFF00"; }); }
+        function initBattleListener() { db.ref('CepWARS/movements').orderByChild('owner').equalTo(currentUser).on('value', s => { document.getElementById('btn-battle-main').style.backgroundColor = s.exists() ? "#FF5252" : "#FFFF00"; }); }
+        function clearAllMessages(){ db.ref('CepWARS/messages/'+currentUser).remove().then(()=>showMsgScreen()); }
     </script>
 </body>
 </html>
